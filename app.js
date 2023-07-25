@@ -73,3 +73,21 @@ app.post('/api/post/:postId/like', async (req, res) => {
     await post.save();
     res.json(post);
   });
+
+// API to comment on a post
+app.post('/api/post/:postId/comment', async (req, res) => {
+    const postId = req.params.postId;
+    const authorId = req.body.authorId;
+    const content = req.body.content;
+  
+    const post = await Post.findById(postId);
+  
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found.' });
+    }
+  
+    const newComment = { authorId, content };
+    post.comments.push(newComment);
+    await post.save();
+    res.json(post);
+  });
