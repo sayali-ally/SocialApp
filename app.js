@@ -18,4 +18,13 @@ const User = mongoose.model('User', {
 const Group = mongoose.model('Group', {
     name: String,
     members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  });
+});
+
+// Created Post model
+const Post = mongoose.model('Post', {
+    groupId: { type: mongoose.Schema.Types.ObjectId, ref: 'Group' },
+    authorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    content: String,
+    likes: { type: Number, default: 0 },
+    comments: [{ authorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, content: String }],
+});
