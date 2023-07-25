@@ -59,3 +59,17 @@ app.post('/api/group/:groupId/post', async (req, res) => {
     await newPost.save();
     res.json(newPost);
   });
+
+// API to like a post
+app.post('/api/post/:postId/like', async (req, res) => {
+    const postId = req.params.postId;
+    const post = await Post.findById(postId);
+  
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found.' });
+    }
+  
+    post.likes++;
+    await post.save();
+    res.json(post);
+  });
