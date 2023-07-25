@@ -36,4 +36,26 @@ app.get('/api/feed/:userId', async (req, res) => {
     const groupIds = userGroups.map(group => group._id);
     const feed = await Post.find({ groupId: { $in: groupIds } }).populate('groupId', 'name').populate('authorId', 'name');
     res.json(feed);
+});
+
+// An API to post inside a group
+app.post('/api/group/:groupId/post', async (req, res) => {
+    const groupId = req.params.groupId;
+    const authorId = req.body.authorId;
+    const content = req.body.content;
+  
+    const group = await Group.findOne({ _id: groupId, members: authorId });
+  
+    if (!group) {
+      return res.status(403).json({ error: 'You are not a member of this group.' });
+    }
+  
+    const newPost = new Post({
+      groupId,
+      authorId,
+      content,
+    });
+  
+    await newPost.save();
+    res.json(newPost);
   });
