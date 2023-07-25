@@ -1,0 +1,25 @@
+
+Implement APIs for a social networking website/app’s feed system
+
+    Requirement: 
+Users should be able to 
+1.Browse a feed/timeline of posts from groups they have joined
+2.Post inside a group and browse this group’s posts
+3.Like on a post
+4.Comment on a post
+
+
+
+
+
+
+Tech stack: Node.js 
+Implementing all the api's in app.js file 
+
+
+INstall the required dependencies:
+
+npm init -y
+npm install express body-parser
+npm install express body-parser mongoose
+
