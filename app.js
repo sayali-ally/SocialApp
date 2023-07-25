@@ -14,3 +14,8 @@ mongoose.connect('mongodb://your choice of data base ', {
 const User = mongoose.model('User', {
     name: String,
 })
+// Created Group model
+const Group = mongoose.model('Group', {
+    name: String,
+    members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  });
