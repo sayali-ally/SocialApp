@@ -10,3 +10,7 @@ mongoose.connect('mongodb://your choice of data base ', {
   useUnifiedTopology: true,
 });
 
+// Have created a user model
+const User = mongoose.model('User', {
+    name: String,
+})
