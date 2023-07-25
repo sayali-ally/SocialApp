@@ -28,3 +28,12 @@ const Post = mongoose.model('Post', {
     likes: { type: Number, default: 0 },
     comments: [{ authorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, content: String }],
 });
+
+// This is the API to get the timeline of posts from groups a user has joined
+app.get('/api/feed/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    const userGroups = await Group.find({ members: userId }).select('_id');
+    const groupIds = userGroups.map(group => group._id);
+    const feed = await Post.find({ groupId: { $in: groupIds } }).populate('groupId', 'name').populate('authorId', 'name');
+    res.json(feed);
+  });
